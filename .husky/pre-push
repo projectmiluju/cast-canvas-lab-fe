@@ -2,8 +2,8 @@
 
 current_branch="$(git symbolic-ref --quiet --short HEAD)"
 
-if [ "$current_branch" = "main" ]; then
-  echo "Direct push to main is blocked by local pre-push policy."
+if [ "$current_branch" = "develop" ]; then
+  echo "Direct push to develop is blocked by local pre-push policy."
   exit 1
 fi
 
