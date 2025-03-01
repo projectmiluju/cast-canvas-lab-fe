@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+current_branch="$(git symbolic-ref --quiet --short HEAD)"
+
+if [ "$current_branch" = "main" ]; then
+  echo "Direct push to main is blocked by local pre-push policy."
+  exit 1
+fi
+
+pnpm run check:branch || exit 1
+pnpm run typecheck || exit 1
+pnpm run build || exit 1
