@@ -53,8 +53,8 @@ Allowed branch names:
 - `main`
 - `develop`
 - `release/<name>`
-- `hotfix/<name>`
-- `<type>/<name>`
+- `hotfix/<issue-number>-<slug>`
+- `<type>/<issue-number>-<slug>`
 
 Allowed `<type>` values:
 
@@ -69,11 +69,17 @@ Allowed `<type>` values:
 - `perf`
 - `revert`
 
+Branch detail rule:
+
+- For `hotfix/*` and `<type>/*`, issue number is required.
+- Format: `<prefix>/<issue-number>-<slug>` (example: `feat/123-login-page`).
+
 Examples:
 
-- `feat/login-page`
-- `fix/api-timeout`
-- `chore/update-deps`
+- `feat/123-login-page`
+- `fix/456-api-timeout`
+- `chore/789-update-deps`
+- `hotfix/900-critical-crash`
 - `release/v1.2.0`
 
 ## Commit Message Rule
