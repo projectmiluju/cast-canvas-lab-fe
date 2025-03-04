@@ -43,3 +43,8 @@ vite.config.js.timestamp-*
 
 # OS files
 Thumbs.db
+
+# Agent
+AGENTS.md
+GEMINI.md
+CLAUDE.md
