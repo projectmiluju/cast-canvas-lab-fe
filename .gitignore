@@ -48,3 +48,5 @@ Thumbs.db
 AGENTS.md
 GEMINI.md
 CLAUDE.md
+docs/decisions/*
+docs/features/*
