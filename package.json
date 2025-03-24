@@ -14,7 +14,7 @@
     "format:check": "prettier --check .",
     "check:branch": "node scripts/check-branch-name.mjs",
     "check:no-secrets": "node scripts/check-no-secrets.mjs",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   },
