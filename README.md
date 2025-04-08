@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# CastCanvas Lab — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CastCanvas Lab은 공간 기반 리서치 워크스페이스입니다.
+PDF 문서와 레퍼런스 이미지를 무한 캔버스 위에 자유롭게 배치하고, 노트와 연결선으로 아이디어를 연결할 수 있습니다.
 
-Currently, two official plugins are available:
+> Notion보다 더 공간적으로, Figma보다 더 문서 친화적으로.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 서비스 구성
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+CastCanvas Lab은 다음 레포지토리로 구성됩니다.
 
-## Expanding the ESLint configuration
+| 레포                     | 역할                                 |
+| ------------------------ | ------------------------------------ |
+| `cast-canvas-lab-fe`     | 워크스페이스 프론트엔드 앱 (이 레포) |
+| `cast-canvas-lab-be`     | 메인 백엔드 API 서버                 |
+| `cast-canvas-lab-collab` | 실시간 협업 서버 (Yjs/WebSocket)     |
+| `cast-canvas-lab-site`   | 퍼블릭 랜딩 사이트                   |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+시스템 전체 구조와 레포 간 책임 경계는 [ARCHITECTURE.md](./ARCHITECTURE.md)를 참고하세요.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 기술 스택
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React 19
+- TypeScript
+- Vite
+- Zustand
+- TanStack Query
+- React Flow (`@xyflow/react` v12)
+- react-pdf
+- SCSS Modules
+
+---
+
+## 로컬 개발 환경 설정
+
+**요구 사항:** Node.js, pnpm
+
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 주요 명령어
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| 명령어            | 설명             |
+| ----------------- | ---------------- |
+| `pnpm dev`        | 개발 서버 실행   |
+| `pnpm build`      | 프로덕션 빌드    |
+| `pnpm lint`       | ESLint 실행      |
+| `pnpm typecheck`  | 타입 검사        |
+| `pnpm test`       | 테스트 실행      |
+| `pnpm test:watch` | 테스트 감시 모드 |
+| `pnpm format`     | 코드 포맷        |
+
+---
+
+## 프로젝트 구조
+
 ```
+src/
+├── app/          # 앱 부트스트랩, 프로바이더
+├── pages/        # 라우트 페이지
+├── features/
+│   ├── canvas/   # 캔버스 인터랙션, 노드/엣지
+│   ├── document/ # 문서 렌더링
+│   ├── image/    # 레퍼런스 이미지
+│   ├── search/   # 검색
+│   └── inspector/# 사이드 패널
+├── entities/     # 도메인 타입 정의
+└── shared/       # 공통 유틸, UI, 상수
+```
+
+---
+
+## 코드 기여 규칙
+
+- 커밋 메시지는 [Conventional Commits](https://www.conventionalcommits.org/) 형식을 따릅니다
+- 브랜치 네이밍 규칙은 커밋 전 자동으로 검사됩니다
+- 코드 스타일은 ESLint + Prettier로 강제됩니다
+- push 전 타입 검사, 테스트, 빌드가 자동으로 실행됩니다
