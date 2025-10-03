@@ -1,0 +1,226 @@
+// =============================================================================
+// Design Tokens — CastCanvas Lab
+// =============================================================================
+// All values are CSS custom properties.
+// Palette tokens (--palette-*) are static color definitions.
+// Semantic tokens (--color-*, --shadow-*, etc.) reference palette tokens
+// and change between light and dark themes.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Palette — Color definitions (never change per theme)
+// -----------------------------------------------------------------------------
+:root {
+  // Neutral (slate-toned gray)
+  --palette-neutral-0: #ffffff;
+  --palette-neutral-50: #f7f8fc;
+  --palette-neutral-100: #eef0f6;
+  --palette-neutral-200: #dde1ed;
+  --palette-neutral-300: #c4cad9;
+  --palette-neutral-400: #9aa3b8;
+  --palette-neutral-500: #6b7491;
+  --palette-neutral-600: #4d5570;
+  --palette-neutral-700: #353c57;
+  --palette-neutral-800: #1e2438;
+  --palette-neutral-900: #0f1220;
+  --palette-neutral-950: #080b14;
+
+  // Primary — Indigo
+  --palette-primary-50: #eef2ff;
+  --palette-primary-100: #e0e7ff;
+  --palette-primary-200: #c7d2fe;
+  --palette-primary-300: #a5b4fc;
+  --palette-primary-400: #818cf8;
+  --palette-primary-500: #6366f1;
+  --palette-primary-600: #4f46e5;
+  --palette-primary-700: #4338ca;
+  --palette-primary-800: #3730a3;
+  --palette-primary-900: #312e81;
+
+  // Status
+  --palette-success: #22c55e;
+  --palette-success-subtle: #dcfce7;
+  --palette-warning: #f59e0b;
+  --palette-warning-subtle: #fef3c7;
+  --palette-error: #ef4444;
+  --palette-error-subtle: #fee2e2;
+  --palette-info: #6366f1;
+  --palette-info-subtle: #eef2ff;
+}
+
+// -----------------------------------------------------------------------------
+// Semantic tokens — Light theme (default)
+// -----------------------------------------------------------------------------
+:root {
+  // Surface
+  --color-bg-app: var(--palette-neutral-100);
+  --color-bg-surface: var(--palette-neutral-0);
+  --color-bg-elevated: var(--palette-neutral-0);
+  --color-bg-sunken: var(--palette-neutral-50);
+  --color-bg-overlay: rgba(15, 18, 32, 0.48);
+
+  // Border
+  --color-border-default: var(--palette-neutral-200);
+  --color-border-subtle: var(--palette-neutral-100);
+  --color-border-strong: var(--palette-neutral-300);
+  --color-border-focus: var(--palette-primary-500);
+
+  // Text
+  --color-text-primary: var(--palette-neutral-900);
+  --color-text-secondary: var(--palette-neutral-600);
+  --color-text-tertiary: var(--palette-neutral-400);
+  --color-text-disabled: var(--palette-neutral-300);
+  --color-text-inverse: var(--palette-neutral-0);
+  --color-text-on-primary: var(--palette-neutral-0);
+  --color-text-link: var(--palette-primary-600);
+
+  // Interactive
+  --color-interactive-primary: var(--palette-primary-600);
+  --color-interactive-primary-hover: var(--palette-primary-700);
+  --color-interactive-primary-active: var(--palette-primary-800);
+  --color-interactive-secondary: var(--palette-neutral-100);
+  --color-interactive-secondary-hover: var(--palette-neutral-200);
+  --color-interactive-secondary-active: var(--palette-neutral-300);
+
+  // Status
+  --color-success: var(--palette-success);
+  --color-success-subtle: var(--palette-success-subtle);
+  --color-warning: var(--palette-warning);
+  --color-warning-subtle: var(--palette-warning-subtle);
+  --color-error: var(--palette-error);
+  --color-error-subtle: var(--palette-error-subtle);
+  --color-info: var(--palette-info);
+  --color-info-subtle: var(--palette-info-subtle);
+
+  // Canvas
+  --color-canvas-bg: #e8eaf2;
+  --color-canvas-grid: rgba(0, 0, 20, 0.07);
+  --color-canvas-node-bg: var(--palette-neutral-0);
+  --color-canvas-node-border: var(--palette-neutral-200);
+  --color-canvas-node-selected: var(--palette-primary-500);
+  --color-canvas-edge: var(--palette-neutral-400);
+  --color-canvas-edge-selected: var(--palette-primary-500);
+  --color-canvas-handle: var(--palette-primary-500);
+
+  // Shadow
+  --shadow-sm: 0 1px 2px rgba(15, 18, 32, 0.07);
+  --shadow-md:
+    0 4px 8px rgba(15, 18, 32, 0.09), 0 1px 2px rgba(15, 18, 32, 0.06);
+  --shadow-lg:
+    0 8px 24px rgba(15, 18, 32, 0.11), 0 2px 8px rgba(15, 18, 32, 0.07);
+  --shadow-xl:
+    0 16px 48px rgba(15, 18, 32, 0.14), 0 4px 16px rgba(15, 18, 32, 0.09);
+}
+
+// -----------------------------------------------------------------------------
+// Semantic tokens — Dark theme
+// Applied when: user explicitly sets dark, OR system is dark (and user hasn't forced light)
+// SCSS doesn't allow mixing selectors and @media in a comma list,
+// so we use a mixin to apply dark tokens in both cases without duplication.
+// -----------------------------------------------------------------------------
+@mixin dark-tokens {
+  // Surface
+  --color-bg-app: var(--palette-neutral-950);
+  --color-bg-surface: var(--palette-neutral-900);
+  --color-bg-elevated: var(--palette-neutral-800);
+  --color-bg-sunken: var(--palette-neutral-950);
+  --color-bg-overlay: rgba(8, 11, 20, 0.64);
+
+  // Border
+  --color-border-default: var(--palette-neutral-700);
+  --color-border-subtle: var(--palette-neutral-800);
+  --color-border-strong: var(--palette-neutral-600);
+  --color-border-focus: var(--palette-primary-400);
+
+  // Text
+  --color-text-primary: var(--palette-neutral-50);
+  --color-text-secondary: var(--palette-neutral-400);
+  --color-text-tertiary: var(--palette-neutral-600);
+  --color-text-disabled: var(--palette-neutral-700);
+  --color-text-inverse: var(--palette-neutral-900);
+  --color-text-on-primary: var(--palette-neutral-0);
+  --color-text-link: var(--palette-primary-300);
+
+  // Interactive
+  --color-interactive-primary: var(--palette-primary-500);
+  --color-interactive-primary-hover: var(--palette-primary-400);
+  --color-interactive-primary-active: var(--palette-primary-300);
+  --color-interactive-secondary: var(--palette-neutral-800);
+  --color-interactive-secondary-hover: var(--palette-neutral-700);
+  --color-interactive-secondary-active: var(--palette-neutral-600);
+
+  // Status (same hue, slightly adjusted for dark bg)
+  --color-success-subtle: rgba(34, 197, 94, 0.12);
+  --color-warning-subtle: rgba(245, 158, 11, 0.12);
+  --color-error-subtle: rgba(239, 68, 68, 0.12);
+  --color-info-subtle: rgba(99, 102, 241, 0.12);
+
+  // Canvas
+  --color-canvas-bg: #0a0c14;
+  --color-canvas-grid: rgba(255, 255, 255, 0.04);
+  --color-canvas-node-bg: var(--palette-neutral-900);
+  --color-canvas-node-border: var(--palette-neutral-700);
+  --color-canvas-node-selected: var(--palette-primary-400);
+  --color-canvas-edge: var(--palette-neutral-600);
+  --color-canvas-edge-selected: var(--palette-primary-400);
+  --color-canvas-handle: var(--palette-primary-400);
+
+  // Shadow
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+// Explicit dark mode (user preference)
+[data-theme="dark"] {
+  @include dark-tokens;
+}
+
+// System dark mode (no explicit user preference set)
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    @include dark-tokens;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Static tokens — Same in both themes
+// -----------------------------------------------------------------------------
+:root {
+  // Spacing (4px base unit)
+  --space-1: 0.25rem; // 4px
+  --space-2: 0.5rem; // 8px
+  --space-3: 0.75rem; // 12px
+  --space-4: 1rem; // 16px
+  --space-5: 1.25rem; // 20px
+  --space-6: 1.5rem; // 24px
+  --space-8: 2rem; // 32px
+  --space-10: 2.5rem; // 40px
+  --space-12: 3rem; // 48px
+  --space-16: 4rem; // 64px
+  --space-20: 5rem; // 80px
+  --space-24: 6rem; // 96px
+
+  // Border radius
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  // Z-index layers
+  --z-canvas-bg: 0;
+  --z-canvas-edge: 5;
+  --z-canvas-node: 10;
+  --z-panel: 100;
+  --z-modal-backdrop: 190;
+  --z-modal: 200;
+  --z-toast: 300;
+
+  // Transition
+  --transition-fast: 100ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+}
