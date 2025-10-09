@@ -1,1 +1,1 @@
-export {};
+export { CanvasPage } from "./CanvasPage/CanvasPage";
