@@ -50,3 +50,4 @@ GEMINI.md
 CLAUDE.md
 docs/decisions/*
 docs/features/*
+.claude/*
