@@ -34,8 +34,13 @@ ol {
 }
 
 // Image defaults
-img,
-svg {
+img {
   display: block;
   max-width: 100%;
+}
+
+// SVG defaults — do NOT apply max-width to svg.
+// React Flow uses SVG for edge rendering and max-width: 100% clips edges in Chrome.
+svg {
+  display: block;
 }
