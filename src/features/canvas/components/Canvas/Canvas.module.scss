@@ -28,6 +28,14 @@
   --xy-handle-background-color-default: var(--color-canvas-handle);
   --xy-handle-border-color-default: var(--color-bg-surface);
 
+  :global(.react-flow__handle) {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+    z-index: 10;
+    pointer-events: all !important;
+  }
+
   // Controls
   --xy-controls-button-background-color-default: var(--color-bg-surface);
   --xy-controls-button-background-color-hover-default: var(
