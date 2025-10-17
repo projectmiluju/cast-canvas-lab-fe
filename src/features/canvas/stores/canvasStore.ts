@@ -7,8 +7,10 @@ import {
   type EdgeChange,
   type Node,
   type NodeChange,
+  type XYPosition,
 } from "@xyflow/react";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
 
 interface CanvasState {
   nodes: Node[];
@@ -16,15 +18,26 @@ interface CanvasState {
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
+  addNode: (
+    type: string,
+    position: XYPosition,
+    data: Record<string, unknown>,
+  ) => void;
 }
 
-export const useCanvasStore = create<CanvasState>((set) => ({
+export const useCanvasStore = create<CanvasState>((set, get) => ({
   nodes: [],
   edges: [],
-  onNodesChange: (changes) =>
-    set((state) => ({ nodes: applyNodeChanges(changes, state.nodes) })),
-  onEdgesChange: (changes) =>
-    set((state) => ({ edges: applyEdgeChanges(changes, state.edges) })),
-  onConnect: (connection) =>
-    set((state) => ({ edges: addEdge(connection, state.edges) })),
+  onNodesChange: (changes) => {
+    set({ nodes: applyNodeChanges(changes, get().nodes) });
+  },
+  onEdgesChange: (changes) => {
+    set({ edges: applyEdgeChanges(changes, get().edges) });
+  },
+  onConnect: (connection) => {
+    set({ edges: addEdge(connection, get().edges) });
+  },
+  addNode: (type, position, data) => {
+    set({ nodes: [...get().nodes, { id: nanoid(), type, position, data }] });
+  },
 }));
