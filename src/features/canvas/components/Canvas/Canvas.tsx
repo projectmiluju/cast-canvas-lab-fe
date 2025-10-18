@@ -3,6 +3,7 @@ import {
   BackgroundVariant,
   Controls,
   ReactFlow,
+  type NodeMouseHandler,
   type ReactFlowInstance,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
@@ -18,7 +19,19 @@ export const Canvas = () => {
   const onEdgesChange = useCanvasStore((s) => s.onEdgesChange);
   const onConnect = useCanvasStore((s) => s.onConnect);
   const addNode = useCanvasStore((s) => s.addNode);
+  const setSelectedNodeId = useCanvasStore((s) => s.setSelectedNodeId);
   const rfInstance = useRef<ReactFlowInstance | null>(null);
+
+  const onNodeClick = useCallback<NodeMouseHandler>(
+    (_, node) => {
+      setSelectedNodeId(node.id);
+    },
+    [setSelectedNodeId],
+  );
+
+  const onPaneClick = useCallback(() => {
+    setSelectedNodeId(null);
+  }, [setSelectedNodeId]);
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
@@ -60,6 +73,8 @@ export const Canvas = () => {
         onInit={(instance) => {
           rfInstance.current = instance;
         }}
+        onNodeClick={onNodeClick}
+        onPaneClick={onPaneClick}
         onDragOver={onDragOver}
         onDrop={onDrop}
         fitView
