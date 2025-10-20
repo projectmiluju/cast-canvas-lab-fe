@@ -1,5 +1,12 @@
 .page {
   width: 100%;
   height: 100%;
-  background: var(--color-canvas-bg);
+  display: flex;
+  overflow: hidden;
+}
+
+.canvasArea {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
 }
