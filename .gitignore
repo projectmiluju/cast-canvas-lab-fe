@@ -45,9 +45,13 @@ vite.config.js.timestamp-*
 Thumbs.db
 
 # Agent
+.agents/*
 AGENTS.md
 GEMINI.md
 CLAUDE.md
 docs/decisions/*
 docs/features/*
+docs/til/*
 .claude/*
+.gemini/*
+    
