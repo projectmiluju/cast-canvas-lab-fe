@@ -39,7 +39,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
     set({ edges: applyEdgeChanges(changes, get().edges) });
   },
   onConnect: (connection) => {
-    set({ edges: addEdge(connection, get().edges) });
+    set({ edges: addEdge({ ...connection, type: "custom" }, get().edges) });
   },
   addNode: (type, position, data) => {
     set({ nodes: [...get().nodes, { id: nanoid(), type, position, data }] });
