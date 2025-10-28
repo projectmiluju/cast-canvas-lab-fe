@@ -10,6 +10,7 @@ import "@xyflow/react/dist/style.css";
 import { useCallback, useRef } from "react";
 import { useCanvasStore } from "../../stores/canvasStore";
 import { nodeTypes } from "../../nodeTypes";
+import { edgeTypes } from "../../edgeTypes";
 import styles from "./Canvas.module.scss";
 
 export const Canvas = () => {
@@ -70,6 +71,7 @@ export const Canvas = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onInit={(instance) => {
           rfInstance.current = instance;
         }}
