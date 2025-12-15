@@ -1,5 +1,6 @@
 // Override React Flow CSS variables with our design tokens
 .wrapper {
+  position: relative;
   width: 100%;
   height: 100%;
 
@@ -21,8 +22,7 @@
   --xy-node-border-default: 1px solid var(--color-canvas-node-border);
   --xy-node-border-radius-default: var(--radius-md);
   --xy-node-boxshadow-hover-default: var(--shadow-md);
-  --xy-node-boxshadow-selected-default: 0 0 0 2px
-    var(--color-canvas-node-selected);
+  --xy-node-boxshadow-selected-default: 0 0 0 2px var(--color-canvas-node-selected);
 
   // Handle
   --xy-handle-background-color-default: var(--color-canvas-handle);
@@ -38,9 +38,7 @@
 
   // Controls
   --xy-controls-button-background-color-default: var(--color-bg-surface);
-  --xy-controls-button-background-color-hover-default: var(
-    --color-interactive-secondary-hover
-  );
+  --xy-controls-button-background-color-hover-default: var(--color-interactive-secondary-hover);
   --xy-controls-button-border-color-default: var(--color-border-default);
   --xy-controls-box-shadow-default: var(--shadow-md);
 

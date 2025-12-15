@@ -1,0 +1,34 @@
+.toolbar {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 10;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    background: var(--color-interactive-secondary-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    background: var(--color-interactive-secondary-active);
+  }
+}

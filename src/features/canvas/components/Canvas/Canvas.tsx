@@ -5,13 +5,14 @@ import {
   ReactFlow,
   type NodeMouseHandler,
   type ReactFlowInstance,
-} from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
-import { useCallback, useRef } from "react";
-import { useCanvasStore } from "../../stores/canvasStore";
-import { nodeTypes } from "../../nodeTypes";
-import { edgeTypes } from "../../edgeTypes";
-import styles from "./Canvas.module.scss";
+} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
+import { useCallback, useRef } from 'react';
+import { useCanvasStore } from '../../stores/canvasStore';
+import { nodeTypes } from '../../nodeTypes';
+import { edgeTypes } from '../../edgeTypes';
+import { Toolbar } from '../Toolbar/Toolbar';
+import styles from './Canvas.module.scss';
 
 export const Canvas = () => {
   const nodes = useCanvasStore((s) => s.nodes);
@@ -22,6 +23,7 @@ export const Canvas = () => {
   const addNode = useCanvasStore((s) => s.addNode);
   const setSelectedNodeId = useCanvasStore((s) => s.setSelectedNodeId);
   const rfInstance = useRef<ReactFlowInstance | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const onNodeClick = useCallback<NodeMouseHandler>(
     (_, node) => {
@@ -34,9 +36,19 @@ export const Canvas = () => {
     setSelectedNodeId(null);
   }, [setSelectedNodeId]);
 
+  const onAddNote = useCallback(() => {
+    if (!rfInstance.current || !wrapperRef.current) return;
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const position = rfInstance.current.screenToFlowPosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
+    addNode('note', position, { text: '' });
+  }, [addNode]);
+
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = "copy";
+    event.dataTransfer.dropEffect = 'copy';
   }, []);
 
   const onDrop = useCallback(
@@ -52,10 +64,10 @@ export const Canvas = () => {
         });
         const fileUrl = URL.createObjectURL(file);
 
-        if (file.type === "application/pdf") {
-          addNode("document", position, { fileName: file.name, fileUrl });
-        } else if (file.type.startsWith("image/")) {
-          addNode("image", position, { fileName: file.name, fileUrl });
+        if (file.type === 'application/pdf') {
+          addNode('document', position, { fileName: file.name, fileUrl });
+        } else if (file.type.startsWith('image/')) {
+          addNode('image', position, { fileName: file.name, fileUrl });
         }
       });
     },
@@ -63,7 +75,7 @@ export const Canvas = () => {
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={wrapperRef}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -80,12 +92,13 @@ export const Canvas = () => {
         onDragOver={onDragOver}
         onDrop={onDrop}
         fitView
-        deleteKeyCode={["Backspace", "Delete"]}
+        deleteKeyCode={['Backspace', 'Delete']}
         connectionRadius={50}
       >
         <Background variant={BackgroundVariant.Dots} />
         <Controls />
       </ReactFlow>
+      <Toolbar onAddNote={onAddNote} />
     </div>
   );
 };
