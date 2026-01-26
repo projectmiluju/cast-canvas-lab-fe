@@ -8,6 +8,8 @@ export const NoteNode = ({ id, data, selected }: NodeProps) => {
   const { updateNodeData } = useReactFlow();
   const contentRef = useRef<HTMLDivElement>(null);
   const isFocusedRef = useRef(false);
+  const isComposingRef = useRef(false);
+  const snapshotRef = useRef<string | null>(null);
 
   useEffect(() => {
     const el = contentRef.current;
@@ -36,16 +38,39 @@ export const NoteNode = ({ id, data, selected }: NodeProps) => {
           sel?.removeAllRanges();
           sel?.addRange(range);
         }}
+        onCompositionStart={() => {
+          isComposingRef.current = true;
+        }}
+        onCompositionEnd={() => {
+          isComposingRef.current = false;
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
+            if (isComposingRef.current) {
+              snapshotRef.current = contentRef.current?.textContent ?? '';
+              isComposingRef.current = false;
+            }
             contentRef.current?.blur();
             return;
           }
           e.stopPropagation();
         }}
-        onBlur={(e) => {
+        onBlur={() => {
           isFocusedRef.current = false;
-          updateNodeData(id, { text: e.currentTarget.textContent ?? '' });
+          const saved = snapshotRef.current;
+          if (saved !== null) {
+            // IME 조합 중 ESC: Chrome commit이 끝난 뒤 스냅샷으로 복원
+            snapshotRef.current = null;
+            requestAnimationFrame(() => {
+              const el = contentRef.current;
+              if (el) el.textContent = saved;
+              updateNodeData(id, { text: saved });
+            });
+          } else {
+            updateNodeData(id, {
+              text: contentRef.current?.textContent ?? '',
+            });
+          }
         }}
       />
       <Handle type="source" position={Position.Bottom} id="source-bottom" />
