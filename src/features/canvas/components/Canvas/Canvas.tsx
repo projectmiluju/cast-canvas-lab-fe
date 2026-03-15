@@ -7,11 +7,12 @@ import {
   type ReactFlowInstance,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useCanvasStore } from '../../stores/canvasStore';
 import { nodeTypes } from '../../nodeTypes';
 import { edgeTypes } from '../../edgeTypes';
 import { Toolbar } from '../Toolbar/Toolbar';
+import { CanvasContextMenu } from '../CanvasContextMenu/CanvasContextMenu';
 import styles from './Canvas.module.scss';
 
 export const Canvas = () => {
@@ -24,6 +25,12 @@ export const Canvas = () => {
   const setSelectedNodeId = useCanvasStore((s) => s.setSelectedNodeId);
   const rfInstance = useRef<ReactFlowInstance | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [contextMenu, setContextMenu] = useState<{
+    screenX: number;
+    screenY: number;
+    flowX: number;
+    flowY: number;
+  } | null>(null);
 
   const onNodeClick = useCallback<NodeMouseHandler>(
     (_, node) => {
@@ -34,7 +41,28 @@ export const Canvas = () => {
 
   const onPaneClick = useCallback(() => {
     setSelectedNodeId(null);
+    setContextMenu(null);
   }, [setSelectedNodeId]);
+
+  const onPaneContextMenu = useCallback((event: MouseEvent | React.MouseEvent) => {
+    event.preventDefault();
+    if (!rfInstance.current) return;
+    const position = rfInstance.current.screenToFlowPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+    setContextMenu({
+      screenX: event.clientX,
+      screenY: event.clientY,
+      flowX: position.x,
+      flowY: position.y,
+    });
+  }, []);
+
+  const onContextMenuAddNote = useCallback(() => {
+    if (!contextMenu) return;
+    addNode('note', { x: contextMenu.flowX, y: contextMenu.flowY }, { text: '' });
+  }, [contextMenu, addNode]);
 
   const onAddNote = useCallback(() => {
     if (!rfInstance.current || !wrapperRef.current) return;
@@ -89,6 +117,7 @@ export const Canvas = () => {
         }}
         onNodeClick={onNodeClick}
         onPaneClick={onPaneClick}
+        onPaneContextMenu={onPaneContextMenu}
         onDragOver={onDragOver}
         onDrop={onDrop}
         fitView
@@ -99,6 +128,14 @@ export const Canvas = () => {
         <Controls />
       </ReactFlow>
       <Toolbar onAddNote={onAddNote} />
+      {contextMenu && (
+        <CanvasContextMenu
+          x={contextMenu.screenX}
+          y={contextMenu.screenY}
+          onAddNote={onContextMenuAddNote}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </div>
   );
 };
