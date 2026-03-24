@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../../shared/stores/authStore';
-import { authApi, SignupRequest } from '../api/authApi';
+import { authApi } from '../api/authApi';
+import type { SignupRequest } from '../api/authApi';
 
 export const useSignup = () => {
   const setAuth = useAuthStore((state) => state.setAuth);

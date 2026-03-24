@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignup } from '../../features/auth/hooks/useSignup';
 import styles from './SignupPage.module.scss';
