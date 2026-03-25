@@ -1,6 +1,12 @@
 import { useAuthStore } from '../stores/authStore';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1';
+
+interface ApiResponse<T> {
+  code: string;
+  message: string;
+  data: T;
+}
 
 interface RequestOptions extends RequestInit {
   skipAuth?: boolean;
@@ -33,7 +39,8 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     throw new Error(message);
   }
 
-  return response.json() as Promise<T>;
+  const body = (await response.json()) as ApiResponse<T>;
+  return body.data;
 }
 
 export const apiClient = {

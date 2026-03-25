@@ -7,9 +7,14 @@ export const useLogin = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
-    mutationFn: (body: LoginRequest) => authApi.login(body),
-    onSuccess: (data) => {
-      setAuth(data.accessToken, data.user);
+    mutationFn: async (body: LoginRequest) => {
+      const tokens = await authApi.login(body);
+      setAuth(tokens.accessToken, { email: '', name: '' });
+      const user = await authApi.getMe();
+      return { tokens, user };
+    },
+    onSuccess: ({ tokens, user }) => {
+      setAuth(tokens.accessToken, { email: user.email, name: user.nickname });
     },
   });
 };

@@ -8,21 +8,25 @@ export interface LoginRequest {
 export interface SignupRequest {
   email: string;
   password: string;
-  name: string;
+  nickname: string;
 }
 
-export interface AuthResponse {
+export interface TokenResponse {
   accessToken: string;
-  user: {
-    email: string;
-    name: string;
-  };
+  refreshToken: string;
+}
+
+export interface AuthUser {
+  email: string;
+  nickname: string;
 }
 
 export const authApi = {
   login: (body: LoginRequest) =>
-    apiClient.post<AuthResponse>('/auth/login', body, { skipAuth: true }),
+    apiClient.post<TokenResponse>('/auth/login', body, { skipAuth: true }),
 
   signup: (body: SignupRequest) =>
-    apiClient.post<AuthResponse>('/auth/signup', body, { skipAuth: true }),
+    apiClient.post<AuthUser>('/auth/signup', body, { skipAuth: true }),
+
+  getMe: () => apiClient.get<AuthUser>('/users/me'),
 };

@@ -8,16 +8,16 @@ export const SignupPage = () => {
   const navigate = useNavigate();
   const { mutate: signup, isPending, error } = useSignup();
 
-  const [name, setName] = useState('');
+  const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     signup(
-      { name, email, password },
+      { nickname, email, password },
       {
-        onSuccess: () => navigate('/'),
+        onSuccess: () => navigate('/login'),
       },
     );
   };
@@ -28,17 +28,17 @@ export const SignupPage = () => {
         <h1 className={styles.title}>회원가입</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.field}>
-            <label className={styles.label} htmlFor="name">
-              이름
+            <label className={styles.label} htmlFor="nickname">
+              닉네임
             </label>
             <input
-              id="name"
+              id="nickname"
               className={styles.input}
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
               required
-              autoComplete="name"
+              autoComplete="nickname"
             />
           </div>
           <div className={styles.field}>
