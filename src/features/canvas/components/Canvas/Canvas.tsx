@@ -8,6 +8,8 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useCallback, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../../../shared/stores/authStore';
 import { useCanvasStore } from '../../stores/canvasStore';
 import { nodeTypes } from '../../nodeTypes';
 import { edgeTypes } from '../../edgeTypes';
@@ -23,6 +25,15 @@ export const Canvas = () => {
   const onConnect = useCanvasStore((s) => s.onConnect);
   const addNode = useCanvasStore((s) => s.addNode);
   const setSelectedNodeId = useCanvasStore((s) => s.setSelectedNodeId);
+  const navigate = useNavigate();
+  const userName = useAuthStore((s) => s.user?.name ?? '');
+  const clearAuth = useAuthStore((s) => s.clearAuth);
+
+  const onLogout = useCallback(() => {
+    clearAuth();
+    navigate('/login');
+  }, [clearAuth, navigate]);
+
   const rfInstance = useRef<ReactFlowInstance | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [contextMenu, setContextMenu] = useState<{
@@ -127,7 +138,7 @@ export const Canvas = () => {
         <Background variant={BackgroundVariant.Dots} />
         <Controls />
       </ReactFlow>
-      <Toolbar onAddNote={onAddNote} />
+      <Toolbar onAddNote={onAddNote} userName={userName} onLogout={onLogout} />
       {contextMenu && (
         <CanvasContextMenu
           x={contextMenu.screenX}
