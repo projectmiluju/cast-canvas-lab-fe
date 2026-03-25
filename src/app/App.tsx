@@ -9,6 +9,7 @@ export const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Routes>
+        <Route path="/local" element={<CanvasPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<CanvasPage />} />
         </Route>
