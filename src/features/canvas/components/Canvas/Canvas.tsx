@@ -132,7 +132,7 @@ export const Canvas = () => {
         <CanvasContextMenu
           x={contextMenu.screenX}
           y={contextMenu.screenY}
-          onAddNote={onContextMenuAddNote}
+          items={[{ label: '노트 추가', onClick: onContextMenuAddNote }]}
           onClose={() => setContextMenu(null)}
         />
       )}
