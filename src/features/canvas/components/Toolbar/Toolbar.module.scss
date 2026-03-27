@@ -1,39 +1,99 @@
+@use '../../../../shared/styles/mixins' as *;
+
 .toolbar {
   position: absolute;
   top: var(--space-3);
   left: var(--space-3);
-  z-index: 10;
+  right: var(--space-3);
+  z-index: var(--z-panel);
   display: flex;
-  gap: var(--space-2);
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2) var(--space-2);
+  height: 44px;
+
+  @include sm {
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.brandMark {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: var(--color-border-default);
+  flex-shrink: 0;
+  margin: 0 var(--space-1);
+}
+
+.spacer {
+  flex: 1;
 }
 
 .userName {
-  display: flex;
+  display: none;
   align-items: center;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-1) var(--space-2);
   font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
+  flex-shrink: 0;
+
+  @include md {
+    display: flex;
+  }
 }
 
 .button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border-default);
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: none;
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
   font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
   cursor: pointer;
   transition:
     background var(--transition-fast),
-    box-shadow var(--transition-fast);
+    border-color var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  @include sm {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  span {
+    display: none;
+
+    @include sm {
+      display: inline;
+    }
+  }
 
   &:hover {
     background: var(--color-interactive-secondary-hover);
-    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-default);
   }
 
   &:active {
