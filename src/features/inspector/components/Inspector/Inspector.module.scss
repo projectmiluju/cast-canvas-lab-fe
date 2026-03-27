@@ -1,13 +1,61 @@
+@use '../../../../shared/styles/mixins' as *;
+
 .panel {
-  width: 320px;
+  width: 100%;
   flex-shrink: 0;
-  height: 100%;
   background: var(--color-bg-surface);
-  border-left: 1px solid var(--color-border-subtle);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   z-index: var(--z-panel);
+
+  // Mobile: bottom sheet
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50dvh;
+  border-top: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-xl);
+  transform: translateY(100%);
+  transition: transform var(--transition-normal);
+
+  &.open {
+    transform: translateY(0);
+  }
+
+  // Desktop: right side panel
+  @include md {
+    position: static;
+    width: 320px;
+    height: 100%;
+    border-top: none;
+    border-left: 1px solid var(--color-border-subtle);
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+.dragHandle {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2) 0 var(--space-1);
+  flex-shrink: 0;
+  cursor: grab;
+
+  @include md {
+    display: none;
+  }
+}
+
+.dragHandleBar {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
 }
 
 .empty {
